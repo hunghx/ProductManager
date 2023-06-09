@@ -1,5 +1,5 @@
 package config;
-
+/** class validate */
 public class Validate {
     public  static boolean checkProductName(String productName){
         // tên sản phẩm phair ít nhất 6 kí tự và bắt đầu bằng chữa P;
