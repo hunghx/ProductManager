@@ -6,6 +6,7 @@ public class Main {
     static ProductController productController = new ProductController();
     public static void main(String[] args) {
 
+
         int choice ;
         while (true){
             System.out.println("=================MENU=================");
@@ -26,9 +27,10 @@ public class Main {
                     // thêm mới sản phẩm
                     break;
                 case 3:
+                    updateProduct();
                     // cập nhật thông tin sản phẩm
                     break;
-                case 4:
+                case 4:delete();
                     // xóa sản phẩm
                     break;
                 case 5:
@@ -82,6 +84,28 @@ public class Main {
             }
         }
         return idMax+1;
+    }
+
+    public static void updateProduct(){
+        System.out.println("nhập vào id sản phẩm bạn muốn sửa: ");
+        int id = Config.scanner().nextInt();
+        Product product = productController.findById(id);
+        if (product != null){
+            System.out.println(product);
+            System.out.println("Id = " + id);
+            System.out.println("Nhập vào tên mới");
+            product.setName(Config.scanner().nextLine());
+            System.out.println("Nhập vào giá mới");
+            product.setPrice(Config.scanner().nextDouble());
+            System.out.println("Nhập vào mo ta mới");
+            product.setDescription(Config.scanner().nextLine());
+            productController.update(product);
+        }else System.out.println("không tìm thấy sản phẩm đó.");
+    }
+    public static void delete(){
+        System.out.println("nhập vào id sản phẩm bạn muốn xóa");
+        int id = Config.scanner().nextInt();
+        productController.delete(id);
     }
 
 }

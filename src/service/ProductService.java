@@ -1,9 +1,11 @@
 package service;
 
+import config.Config;
 import model.Product;
 
 public class ProductService {
     private Product[] listProduct= new Product[100]; // tất cả các phần tử đều null
+
     private int size = 0;
 
     public Product[] getListProduct() {
@@ -26,6 +28,7 @@ public class ProductService {
     }
     public  Product findById(int id){
         for (Product p:listProduct) {
+            if (p == null) continue;
             if(p.getId()== id){
                 return p;
             }
@@ -34,6 +37,7 @@ public class ProductService {
     }
     public void update(Product product){
         for (int i = 0; i < listProduct.length; i++) {
+            if (listProduct[i] == null) continue;
             if(listProduct[i].getId()== product.getId()){
                 listProduct[i] = product;
                 break;
@@ -41,13 +45,22 @@ public class ProductService {
         }
     }
     public void delete(int id){
+        Product product = findById(id);
+        if (product != null){
+        System.out.println("sản phẩm bạn chọn là: " + product);
+        System.out.println("bạn có chắc muốn xóa sp đó?");
+        System.out.println("1. có");
+        System.out.println("2. không");
+        int choice = Config.scanner().nextInt();
+        if (choice == 1){
         for (int i = 0; i < listProduct.length; i++) {
+            if (listProduct[i] == null) continue;
             if(listProduct[i].getId()== id){
                 listProduct[i] = null;
                 size--;
-                break;
+                return;
             }
-        }
+        }}}else System.out.println("không tìm thấy sản phẩm đó");
     }
     public int getSize(){
         return this.size;
