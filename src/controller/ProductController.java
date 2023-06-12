@@ -2,7 +2,7 @@ package controller;
 
 import model.Product;
 import service.ProductService;
-
+/** class controller có chức năng chính là điều hướng từ service ra view */
 public class ProductController {
     private ProductService productService = new ProductService();
 

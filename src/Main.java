@@ -3,9 +3,12 @@ import config.Validate;
 import controller.ProductController;
 import model.Product;
 
+
+/** class này hiển thị các chức năng và nhận dữ liệu từ người dùng. */
 public class Main {
-    static ProductController productController = new ProductController();
+    static ProductController productController = new ProductController();  // tạo đối tượng controller để thao tác với các phương thức
     public static void main(String[] args) {
+
 
         int choice ;
         while (true){
@@ -27,7 +30,6 @@ public class Main {
                     // thêm mới sản phẩm
                     break;
                 case 3:
-
                     updateProduct();
                     // cập nhật thông tin sản phẩm
                     break;
@@ -58,9 +60,9 @@ public class Main {
             }
         }
     }
-    public static void createNewProduct(){
+    public static void createNewProduct(){  // hàm tạo mới sản phẩm
         Product newProduct = new Product();
-        int id = getNewId();
+        int id = getNewId();  // lấy id tự tăng
         newProduct.setId(id);
         System.out.println("Id = "+id);
         System.out.println("Nhập vào tên");
@@ -99,19 +101,22 @@ public class Main {
             System.out.println("Thêm mới thành công");
         }
     }
-    public static int getNewId(){
-        Product[] list = productController.getAll();
-        int idMax = 0;
-        for (Product p: list) {
-            if(p==null){
-                continue;
+    public static int getNewId(){  // hàm tạo id tự động
+        Product[] list = productController.getAll(); // lấy danh sách sản phẩm
+        int idMax = 0;  // tạo id lớn nhất
+        for (Product p: list) {   // duyệt mảng sản phẩm để tìm ra id lớn nhất
+            if(p==null){        // nếu sản phẩm null, chương trình sẽ ném lỗi nullpoiterexeption, khối if này sẽ giải quyết điều đó
+                continue;   // nếu sản phẩm  == null sẽ bỏ qua vòng lặp
             }
-            if(idMax < p.getId()){
+            if(idMax < p.getId()){  // gán max id
                 idMax = p.getId();
             }
         }
-        return idMax+1;
+        return idMax+1;  // trả về id lớn nhất  + 1
     }
+
+
+
     //  update
     public  static void updateProduct(){
         System.out.println("Nhap vao id cua san pham can sua");

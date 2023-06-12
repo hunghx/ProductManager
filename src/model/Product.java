@@ -1,5 +1,5 @@
 package model;
-
+/** đây là class mình sẽ thao tác, các dữ liệu sẽ được mapping thành class này và thao tác  */
 public class Product {
     private int id;
     private String name;
