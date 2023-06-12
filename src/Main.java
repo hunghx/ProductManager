@@ -1,4 +1,5 @@
 import config.Config;
+import config.Validate;
 import controller.ProductController;
 import model.Product;
 
@@ -26,10 +27,13 @@ public class Main {
                     // thêm mới sản phẩm
                     break;
                 case 3:
+
+                    updateProduct();
                     // cập nhật thông tin sản phẩm
                     break;
                 case 4:
                     // xóa sản phẩm
+                    deleteProduct();
                     break;
                 case 5:
                     //
@@ -60,9 +64,34 @@ public class Main {
         newProduct.setId(id);
         System.out.println("Id = "+id);
         System.out.println("Nhập vào tên");
-        newProduct.setName(Config.scanner().nextLine());
+        while (true){
+            String name = Config.scanner().nextLine();
+            if (Validate.checkProductName(name)){
+                if (!productController.checkNameExist(name)){
+                    newProduct.setName(name);
+                    break;
+                }else {
+                    System.err.println("Tên sản phẩm đã tồn tại , vui lòng nhập lại");
+                    continue;
+                }
+            }
+
+            System.err.println("Không hợp lệ!");
+            System.out.println("Vui long nhập lại");
+        }
+
+//        newProduct.setName(Config.scanner().nextLine());
         System.out.println("Nhập vào gia");
-        newProduct.setPrice(Config.scanner().nextDouble());
+        while (true){
+            double price = Config.scanner().nextDouble();
+            if (Validate.checkProductPrice(price)){
+                newProduct.setPrice(price);
+                break;
+            }
+            System.err.println("Không hợp lệ!");
+            System.out.println("Vui long nhập lại");
+        }
+//        newProduct.setPrice(Config.scanner().nextDouble());
         System.out.println("Nhập vào mo ta");
         newProduct.setDescription(Config.scanner().nextLine());
         boolean check = productController.createProduct(newProduct);
@@ -82,6 +111,38 @@ public class Main {
             }
         }
         return idMax+1;
+    }
+    //  update
+    public  static void updateProduct(){
+        System.out.println("Nhap vao id cua san pham can sua");
+        int id = Config.scanner().nextInt();
+        // kiem tra ton tai cua product
+        Product product = productController.findById(id);
+        if (product!=null){
+            System.out.println("ID - "+product.getId());
+            System.out.println("Nhap vao ten moi ( ten cu : "+product.getName()+" )");
+            product.setName(Config.scanner().nextLine());
+            System.out.println("Nhap vao gia moi ( gia cu : "+product.getPrice()+" )");
+            product.setPrice(Config.scanner().nextDouble());
+            System.out.println("Nhap vao mo ta moi ( mo ta cu : "+product.getDescription()+" )");
+            product.setDescription(Config.scanner().nextLine());
+            productController.update(product);
+            System.out.println("Cap nhat thanh cong");
+        }else {
+            System.err.println("khong tim thay san pham can sua");
+        }
+    }
+    public  static  void deleteProduct(){
+        System.out.println("Nhap vao id cua san pham can xoa");
+        int id = Config.scanner().nextInt();
+        // kiem tra ton tai cua product
+        Product product = productController.findById(id);
+        if (product!=null){
+            productController.delete(id);
+            System.out.println("Xoa thanh cong");
+        }else{
+            System.err.println("khong tim thay san pham can xoa");
+        }
     }
 
 }

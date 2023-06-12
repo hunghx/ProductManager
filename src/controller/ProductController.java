@@ -5,6 +5,8 @@ import service.ProductService;
 
 public class ProductController {
     private ProductService productService = new ProductService();
+
+
     public Product[] getAll(){
         return productService.getListProduct();
     }
@@ -22,5 +24,8 @@ public class ProductController {
     }
     public int getSize(){
         return productService.getSize();
+    }
+    public boolean checkNameExist(String name){
+        return productService.checkNameExist(name);
     }
 }

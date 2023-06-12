@@ -11,6 +11,7 @@ public class Validate {
     }
     public  static boolean checkProductPrice(double price){
         if (price<=0){
+            System.err.println("Giá sản phẩm phải > 0");
             return false;
         }
         return true;
